@@ -9,7 +9,7 @@ Future<void> main() async {
   );
 
 }
-
+//ГИБА ЧЕРТ
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
