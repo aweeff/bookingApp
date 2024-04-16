@@ -34,6 +34,7 @@ class RegisterPage extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 36,
+                        fontWeight: FontWeight.bold
                       )
                   ),
                 ],
@@ -101,6 +102,13 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             const SizedBox(height: 120),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  )
+
+            ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
@@ -110,7 +118,12 @@ class _RegisterFormState extends State<RegisterForm> {
                   );
                 }
               },
-              child: const Text('Register'),
+              child: const Text(
+                'Already have an account   Register',
+                style: TextStyle(
+                  color: Colors.white,
+                )
+              ),
             ),
           ],
         ),
