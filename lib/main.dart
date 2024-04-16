@@ -4,7 +4,7 @@ import 'package:project1/logReg page/login.dart';
 void main() {
   runApp(MyApp());
 }
-
+//hui
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
