@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:project1/logReg page/registration.dart';
 import 'package:project1/main.dart';
 import 'package:project1/home_pages/home_page.dart';
@@ -36,6 +37,7 @@ class LoginPage extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 36,
+                      fontWeight: FontWeight.bold
                     )
                   ),
                 ],
@@ -69,9 +71,10 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
-
+  String a = 'Don`t have an accound';
   @override
   Widget build(BuildContext context) {
+    String a = "Don't have an account";
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Form(
@@ -103,6 +106,12 @@ class _LoginFormState extends State<LoginForm> {
             ),
             const SizedBox(height: 120),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)
+                )
+              ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
@@ -112,16 +121,27 @@ class _LoginFormState extends State<LoginForm> {
                   );
                 }
               },
-              child: const Text('Login'),
+              child: const Text(
+                  'Login',
+                style: TextStyle(
+                  color: Colors.white,
+                )
+              ),
             ),
             TextButton(
               onPressed: () {
-                Navigator.push(
+                  Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
-              child: const Text('Create an account'),
+
+              child: Text(
+                '${a}   Create an account',
+                      style: const TextStyle(
+                        color: Colors.blue,
+                      ),
+              ),
             ),
           ],
         ),
@@ -129,3 +149,4 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 }
+//
