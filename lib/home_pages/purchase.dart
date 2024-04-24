@@ -1,157 +1,117 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'my_tickets_page.dart';
+import 'my_favorites_page.dart';
 
-class PurchasePage extends StatefulWidget {
-  @override
-  _PurchasePageState createState() => _PurchasePageState();
-}
-
-class _PurchasePageState extends State<PurchasePage> {
-  final _formKey = GlobalKey<FormState>();
-  final _formData = {
-    'departure': '',
-    'destination': '',
-    'departureDate': '',
-    'returnDate': '',
-    'passengers': '',
-    'class': '',
-  };
-
+class PurchasePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Purchase Tickets'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.bookmark_add_outlined),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyFavoritesPage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.airplane_ticket_outlined),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyTicketsPage()),
+              );},
+          ),
+          PopupMenuButton<String>(
+            onSelected: (String value) {},
+            itemBuilder: (BuildContext context) {
+              return {'KAZ', 'RUS', 'ENG'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Departure',
+                hintText: 'Select your departure',
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Destination',
+                hintText: 'Select your destination',
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Departure Date',
+                hintText: 'Select your departure date',
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Return Date',
+                hintText: 'Select your return date',
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Departure'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter departure';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _formData['departure'] = value!;
-                  },
+                Expanded(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Passenger',
+                      hintText: 'Select passengers',
+                    ),
+                  ),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Destination'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter destination';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _formData['destination'] = value!;
-                  },
-                ),
-                // Add more form fields for departure date, return date, passengers, class, etc.
-                // Remember to add validators and onSaved handlers for each field
-                // Example:
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Departure Date'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter departure date';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _formData['departureDate'] = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Return Date'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter return date';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _formData['returnDate'] = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Passengers'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter number of passengers';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _formData['passengers'] = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Class'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter class';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _formData['class'] = value!;
-                  },
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Save form data
-                      _formKey.currentState!.save();
-                      // Save the form data to SQLite database
-                      _saveFormDataToSQLite(_formData);
-                      // Reset the form
-                      _formKey.currentState!.reset();
-                    }
-                  },
-                  child: Text('Save'),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Class',
+                      hintText: 'Select class',
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Add your search logic here
+                },
+                child: const Text('Search'),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Recent searches',
+            ),
+          ],
         ),
       ),
-    );
-  }
 
-  // Method to save form data into SQLite
-  void _saveFormDataToSQLite(Map<String, dynamic> formData) async {
-    // Open the SQLite database
-    Database database = await openDatabase(
-      join(await getDatabasesPath(), 'flight_database.db'),
-    );
-
-    // Insert the form data into the database
-    await database.insert(
-      'flights', // Table name
-      formData,
-      conflictAlgorithm: ConflictAlgorithm.replace, // Handle conflicts if any
-    );
-
-    // Close the database
-    await database.close();
-
-    // Show a snackbar or navigate to a different page to indicate successful save
-    ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-      SnackBar(
-        content: Text('Flight details saved.'),
-        duration: Duration(seconds: 2),
-      ),
     );
   }
 }
+

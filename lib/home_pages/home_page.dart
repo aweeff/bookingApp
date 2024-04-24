@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
@@ -33,6 +34,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
+        // Update here to show the selected page
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
@@ -76,10 +78,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
       ],
       currentIndex: currentIndex,
-      unselectedItemColor: Colors.grey,
       selectedItemColor: Colors.blue,
       onTap: onTap,
     );
+
+
+
+
   }
 }
 
