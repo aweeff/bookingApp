@@ -5,7 +5,6 @@ import 'package:project1/home_pages/home_page.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +118,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 }
               },
               child: const Text(
-                'Already have an account   Register',
+                'Register',
                 style: TextStyle(
                   color: Colors.white,
                 )
