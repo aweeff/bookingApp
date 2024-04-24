@@ -4,44 +4,43 @@ import 'package:project1/main.dart';
 import 'package:project1/home_pages/home_page.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack( //background
+      body: Stack(
         children: <Widget>[
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFF0078FF), Color(0xFF00B0FF),
-                  ],
+                colors: [
+                  Color(0xFF0078FF),
+                  Color(0xFF00B0FF),
+                ],
               ),
             ),
             child: SizedBox.expand(),
           ),
-
-          const Center( //register text
+          Center(
             child: SelectionArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                      "Register",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold
-                      )
+                    "Register",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-
-          Positioned( //white box
+          Positioned(
             bottom: 0,
             left: 0,
             right: 0,
@@ -57,7 +56,7 @@ class RegisterPage extends StatelessWidget {
 }
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({super.key});
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
   _RegisterFormState createState() => _RegisterFormState();
@@ -71,7 +70,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Form(
         key: _formKey,
         child: Column(
@@ -83,6 +82,11 @@ class _RegisterFormState extends State<RegisterForm> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
+                }
+                // Email validation pattern
+                final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                if (!emailRegex.hasMatch(value)) {
+                  return 'Please enter a valid email';
                 }
                 return null;
               },
@@ -103,11 +107,10 @@ class _RegisterFormState extends State<RegisterForm> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                  )
-
-            ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
@@ -121,7 +124,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 'Register',
                 style: TextStyle(
                   color: Colors.white,
-                )
+                ),
               ),
             ),
           ],

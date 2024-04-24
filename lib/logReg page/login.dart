@@ -8,13 +8,13 @@ import 'package:project1/main.dart';
 import 'package:project1/home_pages/home_page.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Container( //background
+          Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -27,25 +27,25 @@ class LoginPage extends StatelessWidget {
             child: const SizedBox.expand(),
           ),
 
-          const Center( //login text
+          const Center(
             child: SelectionArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                      "Login",
+                    "Login",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 36,
-                      fontWeight: FontWeight.bold
-                    )
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
 
-          Positioned( // white box
+          Positioned(
             bottom: 0,
             left: 0,
             right: 0,
@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  const LoginForm({Key? key});
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -76,7 +76,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     String a = "Don't have an account";
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Form(
         key: _formKey,
         child: Column(
@@ -88,6 +88,11 @@ class _LoginFormState extends State<LoginForm> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
+                }
+                // Email validation pattern
+                final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                if (!emailRegex.hasMatch(value)) {
+                  return 'Please enter a valid email';
                 }
                 return null;
               },
@@ -109,8 +114,8 @@ class _LoginFormState extends State<LoginForm> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)
-                )
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
@@ -122,15 +127,15 @@ class _LoginFormState extends State<LoginForm> {
                 }
               },
               child: const Text(
-                  'Login',
+                'Login',
                 style: TextStyle(
                   color: Colors.white,
-                )
+                ),
               ),
             ),
             TextButton(
               onPressed: () {
-                  Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
@@ -138,9 +143,9 @@ class _LoginFormState extends State<LoginForm> {
 
               child: Text(
                 '${a}   Create an account',
-                      style: const TextStyle(
-                        color: Colors.blue,
-                      ),
+                style: const TextStyle(
+                  color: Colors.blue,
+                ),
               ),
             ),
           ],
@@ -149,4 +154,3 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 }
-//
