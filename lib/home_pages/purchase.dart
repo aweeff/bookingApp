@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class PurchasePage extends StatefulWidget {
@@ -108,49 +107,11 @@ class _PurchasePageState extends State<PurchasePage> {
                   },
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Save form data
-                      _formKey.currentState!.save();
-                      // Save the form data to SQLite database
-                      _saveFormDataToSQLite(_formData);
-                      // Reset the form
-                      _formKey.currentState!.reset();
-                    }
-                  },
-                  child: Text('Save'),
-                ),
+
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  // Method to save form data into SQLite
-  void _saveFormDataToSQLite(Map<String, dynamic> formData) async {
-    // Open the SQLite database
-    Database database = await openDatabase(
-      join(await getDatabasesPath(), 'flight_database.db'),
-    );
-
-    // Insert the form data into the database
-    await database.insert(
-      'flights', // Table name
-      formData,
-      conflictAlgorithm: ConflictAlgorithm.replace, // Handle conflicts if any
-    );
-
-    // Close the database
-    await database.close();
-
-    // Show a snackbar or navigate to a different page to indicate successful save
-    ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-      SnackBar(
-        content: Text('Flight details saved.'),
-        duration: Duration(seconds: 2),
       ),
     );
   }

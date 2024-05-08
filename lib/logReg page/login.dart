@@ -1,14 +1,13 @@
-import 'dart:ui';
-
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:project1/logReg page/registration.dart';
-import 'package:project1/main.dart';
+import 'package:http/http.dart' as http;
+import 'package:project1/logReg%20page/registration.dart';
 import 'package:project1/home_pages/home_page.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key});
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +60,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key});
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -71,7 +70,35 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
-  String a = 'Don`t have an accound';
+  String a = 'Don`t have an account';
+
+  Future<void> _login() async {
+    final response = await http.post(
+      Uri.parse('http://192.168.1.37:3000/api/login'), // Update with your backend URL
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': _email,
+        'password': _password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Assuming the response body contains a token or some user data
+      // Navigate to HomePage
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNavBar()),
+      );
+    } else {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed. Please check your credentials.')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String a = "Don't have an account";
@@ -109,7 +136,7 @@ class _LoginFormState extends State<LoginForm> {
               },
               onSaved: (value) => _password = value!,
             ),
-            const SizedBox(height: 120),
+            const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
@@ -120,10 +147,7 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
+                  _login();
                 }
               },
               child: const Text(
@@ -140,7 +164,6 @@ class _LoginFormState extends State<LoginForm> {
                   MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
-
               child: Text(
                 '${a}   Create an account',
                 style: const TextStyle(
