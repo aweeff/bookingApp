@@ -8,18 +8,18 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   String _searchText = '';
   List<String> _searchResults = [];
+  final List<String> _allItems = [
+    'Almaty',
+    'Dubai',
+    'Moscow',
+    'New York',
+    'London',
+    'Karagandy',
+  ];
 
   void _performSearch(String searchText) {
-    List<String> allItems = [
-      'Almaty',
-      'Dubai',
-      'Moscow',
-      'New York',
-      'London',
-      'Karagandy',
-    ];
     setState(() {
-      _searchResults = allItems
+      _searchResults = _allItems
           .where((item) => item.toLowerCase().contains(searchText.toLowerCase()))
           .toList();
     });
@@ -34,21 +34,23 @@ class _SearchPageState extends State<SearchPage> {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search...',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.search),
               ),
               onChanged: (value) {
-                setState(() {
-                  _searchText = value;
-                });
+                _searchText = value;
                 _performSearch(_searchText);
               },
             ),
           ),
           Expanded(
-            child: ListView.builder(
+            child: _searchResults.isEmpty && _searchText.isNotEmpty
+                ? Center(child: Text('No results found'))
+                : ListView.builder(
               itemCount: _searchResults.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
