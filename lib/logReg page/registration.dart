@@ -87,7 +87,7 @@ class _RegisterFormState extends State<RegisterForm> {
         // Registration successful, navigate to home page or show success message
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => HomePage(user:response.body)),
         );
       } else {
         // Registration failed, show error message

@@ -89,12 +89,12 @@ class _LoginFormState extends State<LoginForm> {
       // Navigate to HomePage
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => HomePage(user:response.body)),
       );
     } else {
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed. Please check your credentials.')),
+        const SnackBar(content: Text('Login failed. Please check your credentials.')),
       );
     }
   }
@@ -111,7 +111,7 @@ class _LoginFormState extends State<LoginForm> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
@@ -161,7 +161,7 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                  MaterialPageRoute(builder: (context) => const RegisterPage()),
                 );
               },
               child: Text(
