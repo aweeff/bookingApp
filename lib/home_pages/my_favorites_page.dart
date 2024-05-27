@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class MyFavoritesPage extends StatefulWidget {
@@ -9,32 +8,7 @@ class MyFavoritesPage extends StatefulWidget {
 
 class _MyFavoritesPageState extends State<MyFavoritesPage> {
   List<Map<String, dynamic>> _favoritesData = [];
-
-  @override
-  void initState() {
-    super.initState();
-    // Fetch favorites data from SQLite database when the page initializes
-    _fetchFavoritesData();
-  }
-
   // Method to fetch favorites data from SQLite database
-  void _fetchFavoritesData() async {
-    // Open the SQLite database
-    Database database = await openDatabase(
-      join(await getDatabasesPath(), 'flight_database.db'),
-    );
-
-    // Query the database to fetch favorites data
-    List<Map<String, dynamic>> favorites = await database.query('flights');
-
-    // Update the state with fetched favorites data
-    setState(() {
-      _favoritesData = favorites;
-    });
-
-    // Close the database
-    await database.close();
-  }
 
   @override
   Widget build(BuildContext context) {

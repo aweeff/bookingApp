@@ -1,10 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:project1/logReg page/login.dart';
-import 'package:project1/main.dart';
+import 'package:http/http.dart' as http;
 import 'package:project1/home_pages/home_page.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +68,41 @@ class _RegisterFormState extends State<RegisterForm> {
   String _email = '';
   String _password = '';
 
+  Future<void> _register() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://172.21.80.1:3000/api/register'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'email': _email,
+          'password': _password,
+          'name': "changeme",
+          'surname': "changeme"
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        // Registration successful, navigate to home page or show success message
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BottomNavBar()),
+        );
+      } else {
+        // Registration failed, show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration failed. Please try again.')),
+        );
+      }
+    } catch (e) {
+      // Exception occurred during registration, show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -83,11 +119,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
                 }
-                // Email validation pattern
-                final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                if (!emailRegex.hasMatch(value)) {
-                  return 'Please enter a valid email';
-                }
+                // Add more validation if needed
                 return null;
               },
               onSaved: (value) => _email = value!,
@@ -99,33 +131,20 @@ class _RegisterFormState extends State<RegisterForm> {
                 if (value!.isEmpty) {
                   return 'Please enter your password';
                 }
+                // Add more validation if needed
                 return null;
               },
               onSaved: (value) => _password = value!,
             ),
-            const SizedBox(height: 120),
+            const SizedBox(height: 20),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
+                  _register();
                 }
               },
-              child: const Text(
-                'Register',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
+              child: const Text('Register'),
             ),
           ],
         ),
