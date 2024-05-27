@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'my_tickets_page.dart';
 import 'my_favorites_page.dart';
 import 'profile_page.dart';
-import 'search_page.dart';
+import 'purchase.dart';
+
+
+import 'package:provider/provider.dart';
+import 'package:project1/themes/theme_provider.dart';
+import 'package:project1/themes/themes.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,11 +19,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  void _changeTheme(ThemeData theme) {
+    Provider.of<ThemeProvider>(context, listen: false).setTheme(theme);
+  }
+  int _currentIndex = 0;
+  final List<Widget> _pages = [
+     PurchasePage(),
+    MyTicketsPage(),
+    ProfilePage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome'),
+        title: const Text('JetJoy'),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {},
@@ -32,13 +49,25 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.airplane_ticket_outlined),
-            onPressed: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MyTicketsPage()),
-            );},
+          PopupMenuButton<String>(
+            onSelected: (String value) {
+              if (value == 'Light') {
+                _changeTheme(lightTheme);
+              } else if (value == 'Dark') {
+                _changeTheme(darkTheme);
+              } else if (value == 'Custom') {
+                _changeTheme(customColorfulTheme);
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return {'Light', 'Dark', 'Custom'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+            icon: Icon(Icons.sunny),
           ),
           PopupMenuButton<String>(
             onSelected: (String value) {},
@@ -53,110 +82,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Departure',
-                hintText: 'Select your departure',
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Destination',
-                hintText: 'Select your destination',
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Departure Date',
-                hintText: 'Select your departure date',
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Return Date',
-                hintText: 'Select your return date',
-              ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Passenger',
-                      hintText: 'Select passengers',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Class',
-                      hintText: 'Select class',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Add your search logic here
-                },
-                child: const Text('Search'),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Recent searches',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
-
-  @override
-  _BottomNavBar createState() => _BottomNavBar();
-}
-
-class _BottomNavBar extends State<BottomNavBar> {
-  int _currentIndex = 0;
-  final List<Widget> _pages = [
-    const HomePage(),
-    MyTicketsPage(),
-    ProfilePage(),
-  ];
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: _pages[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
         items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.confirmation_number), label: 'Tickets'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-    ],
-    ),
+          BottomNavigationBarItem(icon: Icon(Icons.flight), label: 'Booking'),
+          BottomNavigationBarItem(icon: Icon(Icons.confirmation_number), label: 'Tickets'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+      ),
     );
   }
 }

@@ -89,7 +89,7 @@ class _LoginFormState extends State<LoginForm> {
       // Navigate to HomePage
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => BottomNavBar()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     } else {
       // Show error message
