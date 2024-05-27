@@ -74,7 +74,7 @@ class _LoginFormState extends State<LoginForm> {
 
   Future<void> _login() async {
     final response = await http.post(
-      Uri.parse('http://192.168.1.28:3000/api/login'), // Update with your backend URL
+      Uri.parse('http://10.201.0.112:3000/api/login'), // Update with your backend URL
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -89,12 +89,12 @@ class _LoginFormState extends State<LoginForm> {
       // Navigate to HomePage
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => HomePage(user:response.body)),
       );
     } else {
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed. Please check your credentials.')),
+        const SnackBar(content: Text('Login failed. Please check your credentials.')),
       );
     }
   }
@@ -111,7 +111,7 @@ class _LoginFormState extends State<LoginForm> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
@@ -161,7 +161,7 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                  MaterialPageRoute(builder: (context) => const RegisterPage()),
                 );
               },
               child: Text(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;// Ensure you have the correct path for your theme_provider.dart
+import 'package:http/http.dart' as http;
+import 'package:project1/localizations/l10n.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -41,33 +42,33 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    var localizations = AppLocalizations.of(context);
 
+    return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Name: $_name',
+              '${localizations.translate('name')}: $_name',
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 10),
             Text(
-              'Email: $_email',
+              '${localizations.translate('email')}: $_email',
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 10),
             Text(
-              'Phone: $_phone',
+              '${localizations.translate('phone')}: $_phone',
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 10),
             Text(
-              'Address: $_address',
+              '${localizations.translate('address')}: $_address',
               style: TextStyle(fontSize: 20),
             ),
           ],

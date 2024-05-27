@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+import 'package:project1/localizations/l10n.dart';
 
 class PurchasePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
+    var localizations = AppLocalizations.of(context);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -11,30 +13,30 @@ class PurchasePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Departure',
-                hintText: 'Select your departure',
+              decoration: InputDecoration(
+                labelText: localizations.translate('departure'),
+                hintText: localizations.translate('select_departure'),
               ),
             ),
             const SizedBox(height: 10),
             TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Destination',
-                hintText: 'Select your destination',
+              decoration: InputDecoration(
+                labelText: localizations.translate('destination'),
+                hintText: localizations.translate('select_destination'),
               ),
             ),
             const SizedBox(height: 10),
             TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Departure Date',
-                hintText: 'Select your departure date',
+              decoration: InputDecoration(
+                labelText: localizations.translate('departure_date'),
+                hintText: localizations.translate('select_departure_date'),
               ),
             ),
             const SizedBox(height: 10),
             TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Return Date',
-                hintText: 'Select your return date',
+              decoration: InputDecoration(
+                labelText: localizations.translate('return_date'),
+                hintText: localizations.translate('select_return_date'),
               ),
             ),
             const SizedBox(height: 20),
@@ -43,18 +45,18 @@ class PurchasePage extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Passenger',
-                      hintText: 'Select passengers',
+                    decoration: InputDecoration(
+                      labelText: localizations.translate('passenger'),
+                      hintText: localizations.translate('select_passengers'),
                     ),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Class',
-                      hintText: 'Select class',
+                    decoration: InputDecoration(
+                      labelText: localizations.translate('class'),
+                      hintText: localizations.translate('select_class'),
                     ),
                   ),
                 ),
@@ -67,12 +69,12 @@ class PurchasePage extends StatelessWidget {
                 onPressed: () {
                   // Add your search logic here
                 },
-                child: const Text('Search'),
+                child: Text(localizations.translate('search')),
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Recent searches',
+            Text(
+              localizations.translate('recent_searches'),
             ),
           ],
         ),
@@ -80,4 +82,3 @@ class PurchasePage extends StatelessWidget {
     );
   }
 }
-

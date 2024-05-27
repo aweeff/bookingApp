@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../main.dart';
 import 'my_tickets_page.dart';
 import 'my_favorites_page.dart';
 import 'profile_page.dart';
 import 'purchase.dart';
-
-
 import 'package:provider/provider.dart';
 import 'package:project1/themes/theme_provider.dart';
 import 'package:project1/themes/themes.dart';
-
+import 'package:project1/localizations/l10n.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final dynamic user;
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -25,16 +25,18 @@ class _HomePageState extends State<HomePage> {
   }
   int _currentIndex = 0;
   final List<Widget> _pages = [
-     PurchasePage(),
+    PurchasePage( ),
     MyTicketsPage(),
     ProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    var localizations = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('JetJoy'),
+        title: Text(localizations.translate('jetjoy')),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {},
@@ -63,14 +65,27 @@ class _HomePageState extends State<HomePage> {
               return {'Light', 'Dark', 'Custom'}.map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
-                  child: Text(choice),
+                  child: Text(localizations.translate(choice.toLowerCase())),
                 );
               }).toList();
             },
-            icon: Icon(Icons.sunny),
+            icon: const Icon(Icons.sunny),
           ),
           PopupMenuButton<String>(
-            onSelected: (String value) {},
+            onSelected: (String value) {
+              Locale newLocale;
+              switch (value) {
+                case 'KAZ':
+                  newLocale = Locale('kk');
+                  break;
+                case 'RUS':
+                  newLocale = Locale('ru');
+                  break;
+                default:
+                  newLocale = Locale('en');
+              }
+              MyApp.of(context)!.setLocale(newLocale);
+            },
             itemBuilder: (BuildContext context) {
               return {'KAZ', 'RUS', 'ENG'}.map((String choice) {
                 return PopupMenuItem<String>(
@@ -86,13 +101,12 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.flight), label: 'Booking'),
-          BottomNavigationBarItem(icon: Icon(Icons.confirmation_number), label: 'Tickets'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        items: [
+          BottomNavigationBarItem(icon: const Icon(Icons.flight), label: localizations.translate('booking')),
+          BottomNavigationBarItem(icon: const Icon(Icons.confirmation_number), label: localizations.translate('tickets')),
+          BottomNavigationBarItem(icon: const Icon(Icons.person), label: localizations.translate('profile')),
         ],
       ),
     );
   }
 }
-

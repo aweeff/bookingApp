@@ -71,7 +71,7 @@ class _RegisterFormState extends State<RegisterForm> {
   Future<void> _register() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.28:3000/api/register'),
+        Uri.parse('http://10.201.0.112:3000/api/register'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -87,7 +87,7 @@ class _RegisterFormState extends State<RegisterForm> {
         // Registration successful, navigate to home page or show success message
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => HomePage(user:response.body)),
         );
       } else {
         // Registration failed, show error message

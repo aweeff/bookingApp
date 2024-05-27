@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:project1/logReg page/login.dart';
-import 'package:project1/themes/themes.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:project1/localizations/l10n.dart';
 import 'package:provider/provider.dart';
-import 'package:project1/themes/theme_provider.dart';
+import 'logReg page/login.dart';
+import 'themes/themes.dart';
+import 'themes/theme_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  static _MyAppState? of(BuildContext context) =>
+      context.findAncestorStateOfType<_MyAppState>();
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = Locale('en');
+
+  void setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +38,17 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Flutter Demo',
             theme: themeProvider.themeData,
+            locale: _locale,
+            supportedLocales: [
+              Locale('en', ''),
+              Locale('ru', ''),
+              Locale('kk', ''),
+            ],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
             home: LoginPage(),
           );
         },

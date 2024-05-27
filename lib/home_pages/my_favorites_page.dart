@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+import 'package:project1/localizations/l10n.dart';
 
 class MyFavoritesPage extends StatefulWidget {
   @override
@@ -8,23 +8,22 @@ class MyFavoritesPage extends StatefulWidget {
 
 class _MyFavoritesPageState extends State<MyFavoritesPage> {
   List<Map<String, dynamic>> _favoritesData = [];
-  // Method to fetch favorites data from SQLite database
 
   @override
   Widget build(BuildContext context) {
+    var localizations = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Favorites'),
+        title: Text(localizations.translate('my_favorites')),
       ),
       body: _favoritesData.isNotEmpty
           ? ListView.builder(
         itemCount: _favoritesData.length,
         itemBuilder: (context, index) {
-          // Build each item using ListTile or any other desired widget
           return ListTile(
             title: Text(_favoritesData[index]['departure']),
             subtitle: Text(_favoritesData[index]['destination']),
-            // Add more fields as needed
           );
         },
       )
@@ -39,7 +38,7 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
             ),
             SizedBox(height: 20),
             Text(
-              'No favorites yet',
+              localizations.translate('no_favorites'),
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.grey,

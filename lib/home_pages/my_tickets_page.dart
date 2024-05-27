@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:project1/localizations/l10n.dart';
 
 class MyTicketsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var localizations = AppLocalizations.of(context);
+
     return Scaffold(
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -15,7 +18,7 @@ class MyTicketsPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'No tickets yet',
+              localizations.translate('no_tickets'),
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.grey,
