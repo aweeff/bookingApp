@@ -23,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _fetchUserProfile() async {
     try {
-      final response = await http.get(Uri.parse('http://localhost:3000/api/profile')); // Update with your backend endpoint
+      final response = await http.get(Uri.parse('http:// 10.201.4.144:3000/api/profile')); // Update with your backend endpoint
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {

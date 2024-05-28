@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:project1/localizations/l10n.dart';
 
-class PurchasePage extends StatelessWidget {
+class PurchasePage extends StatefulWidget {
+  final dynamic user;
+
+  PurchasePage({Key? key, required this.user}) : super(key: key);
+  @override
+  _PurchasePageState createState() => _PurchasePageState();
+}
+
+class _PurchasePageState extends State<PurchasePage> {
+  String? departure;
+  String? destination;
+  String? departureDate;
+  String? returnDate;
+  String? passenger;
+  String? travelClass;
+
   @override
   Widget build(BuildContext context) {
     var localizations = AppLocalizations.of(context);
@@ -13,6 +28,7 @@ class PurchasePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
+              onChanged: (value) => setState(() => departure = value),
               decoration: InputDecoration(
                 labelText: localizations.translate('departure'),
                 hintText: localizations.translate('select_departure'),
@@ -20,6 +36,7 @@ class PurchasePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextFormField(
+              onChanged: (value) => setState(() => destination = value),
               decoration: InputDecoration(
                 labelText: localizations.translate('destination'),
                 hintText: localizations.translate('select_destination'),
@@ -27,6 +44,7 @@ class PurchasePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextFormField(
+              onChanged: (value) => setState(() => departureDate = value),
               decoration: InputDecoration(
                 labelText: localizations.translate('departure_date'),
                 hintText: localizations.translate('select_departure_date'),
@@ -34,6 +52,7 @@ class PurchasePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextFormField(
+              onChanged: (value) => setState(() => returnDate = value),
               decoration: InputDecoration(
                 labelText: localizations.translate('return_date'),
                 hintText: localizations.translate('select_return_date'),
@@ -45,6 +64,7 @@ class PurchasePage extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: TextFormField(
+                    onChanged: (value) => setState(() => passenger = value),
                     decoration: InputDecoration(
                       labelText: localizations.translate('passenger'),
                       hintText: localizations.translate('select_passengers'),
@@ -54,6 +74,7 @@ class PurchasePage extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: TextFormField(
+                    onChanged: (value) => setState(() => travelClass = value),
                     decoration: InputDecoration(
                       labelText: localizations.translate('class'),
                       hintText: localizations.translate('select_class'),

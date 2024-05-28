@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project1/logReg%20page/registration.dart';
 import 'package:project1/home_pages/home_page.dart';
+import 'package:project1/models/UserData.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -74,7 +75,7 @@ class _LoginFormState extends State<LoginForm> {
 
   Future<void> _login() async {
     final response = await http.post(
-      Uri.parse('http://10.200.1.237:3000/api/login'), // Update with your backend URL
+      Uri.parse('http://10.202.8.249:3000/api/login'), // Update with your backend URL
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -85,12 +86,15 @@ class _LoginFormState extends State<LoginForm> {
     );
 
     if (response.statusCode == 200) {
+
+      dynamic userdata = response.body;
       // Assuming the response body contains a token or some user data
       // Navigate to HomePage
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(user:response.body)),
+        MaterialPageRoute(builder: (context) => HomePage(user:userdata)),
       );
+      print(userdata);
     } else {
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
