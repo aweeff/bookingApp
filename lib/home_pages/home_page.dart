@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:project1/models/UserData.dart';
 import '../main.dart';
 import 'my_tickets_page.dart';
 import 'my_favorites_page.dart';
@@ -16,22 +17,23 @@ import 'package:project1/themes/themes.dart';
 class HomePage extends StatefulWidget {
   final dynamic user;
   const HomePage({Key? key, required this.user}) : super(key: key);
-
   @override
   _HomePageState createState() => _HomePageState();
-}
 
+}
 class _HomePageState extends State<HomePage> {
+
 
   void _changeTheme(ThemeData theme) {
     Provider.of<ThemeProvider>(context, listen: false).setTheme(theme);
   }
   int _currentIndex = 0;
   final List<Widget> _pages = [
-     PurchasePage(),
+    PurchasePage(user: {}),
     MyTicketsPage(),
     ProfilePage(),
   ];
+
 
   @override
   Widget build(BuildContext context) {

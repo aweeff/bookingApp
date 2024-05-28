@@ -71,7 +71,7 @@ class _RegisterFormState extends State<RegisterForm> {
   Future<void> _register() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.200.1.237:3000/api/register'),
+        Uri.parse('http://10.202.8.249:3000/api/register'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
