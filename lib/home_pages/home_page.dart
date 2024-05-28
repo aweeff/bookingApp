@@ -22,21 +22,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  late List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize pages here to ensure widget.user is passed correctly
+    _pages = [
+      PurchasePage(user: widget.user),
+      MyTicketsPage(), // Assuming MyTicketsPage doesn't need user data
+      MapScreen(), // Assuming MapScreen doesn't need user data
+      ProfilePage(user: widget.user), // Assuming ProfilePage doesn't need user data
+    ];
+  }
+
   void _changeTheme(ThemeData theme) {
     Provider.of<ThemeProvider>(context, listen: false).setTheme(theme);
   }
 
-  int _currentIndex = 0;
-  final List<Widget> _pages = [
-    PurchasePage(user: null,),
-    MyTicketsPage(),
-    MapScreen(), // Add MapScreen here
-    ProfilePage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    var localizations =   AppLocalizations.of(context);
+    var localizations = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('JetJoy'),

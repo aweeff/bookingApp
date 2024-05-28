@@ -84,10 +84,11 @@ class _RegisterFormState extends State<RegisterForm> {
       );
 
       if (response.statusCode == 201) {
+        dynamic userdata = response.body;
         // Registration successful, navigate to home page or show success message
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomePage(user:response.body)),
+          MaterialPageRoute(builder: (context) => HomePage(user:jsonDecode(userdata))),
         );
       } else {
         // Registration failed, show error message
