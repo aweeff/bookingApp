@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import '../main.dart';
 import 'my_tickets_page.dart';
 import 'my_favorites_page.dart';
 import 'profile_page.dart';
@@ -71,7 +73,20 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.sunny),
           ),
           PopupMenuButton<String>(
-            onSelected: (String value) {},
+            onSelected: (String value) {
+              Locale newLocale;
+              switch (value) {
+                case 'KAZ':
+                  newLocale = Locale('kk');
+                  break;
+                case 'RUS':
+                  newLocale = Locale('ru');
+                  break;
+                default:
+                  newLocale = Locale('en');
+              }
+              MyApp.of(context)!.setLocale(newLocale);
+            },
             itemBuilder: (BuildContext context) {
               return {'KAZ', 'RUS', 'ENG'}.map((String choice) {
                 return PopupMenuItem<String>(
