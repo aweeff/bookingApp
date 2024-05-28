@@ -85,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
     children: [
     TextField(
     controller: _nameController,
-    decoration: InputDecoration(
+    decoration: const InputDecoration(
     labelText: 'name' ?? 'Name',
     ),
       onChanged: (value) {
@@ -94,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
     ),
     TextField(
     controller: _emailController,
-    decoration: InputDecoration(
+    decoration: const InputDecoration(
     labelText: 'email' ?? 'Email',
     ),
       onChanged: (value) {
@@ -103,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
     ),
     TextField(
     controller: _phoneController,
-    decoration: InputDecoration(
+    decoration: const InputDecoration(
     labelText: 'phone' ?? 'Phone',
     ),
       onChanged: (value) {
@@ -112,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
     ),
     TextField(
     controller: _addressController,
-    decoration: InputDecoration(
+    decoration: const InputDecoration(
     labelText: 'address' ?? 'Address',
     ),
       onChanged: (value) {
@@ -121,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
     ),
     ElevatedButton(
     onPressed: _updateUserProfile,
-    child: Text('applyChanges' ?? 'Apply Changes'),
+    child: const Text('applyChanges' ?? 'Apply Changes'),
     ),]
     ))
     );
