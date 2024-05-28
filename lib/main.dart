@@ -3,8 +3,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:project1/localizations/l10n.dart';
 import 'package:provider/provider.dart';
 import 'logReg page/login.dart';
+import 'maps/map_screen.dart';
 import 'themes/themes.dart';
-import 'themes/theme_provider.dart';
+import 'themes/theme_provider.dart';  // Import the MapScreen
 
 void main() {
   runApp(MyApp());
@@ -50,6 +51,9 @@ class _MyAppState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
             ],
             home: LoginPage(),
+            routes: {
+              '/map': (context) => MapScreen(),
+            },
           );
         },
       ),

@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import '../main.dart';
 import 'my_tickets_page.dart';
 import 'my_favorites_page.dart';
 import 'profile_page.dart';
 import 'purchase.dart';
+import 'package:project1/maps/map_screen.dart'; // Import the MapScreen
 
-
-import 'package:provider/provider.dart';
 import 'package:project1/themes/theme_provider.dart';
 import 'package:project1/themes/themes.dart';
-
 
 class HomePage extends StatefulWidget {
   final dynamic user;
@@ -22,14 +21,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   void _changeTheme(ThemeData theme) {
     Provider.of<ThemeProvider>(context, listen: false).setTheme(theme);
   }
+
   int _currentIndex = 0;
   final List<Widget> _pages = [
-     PurchasePage(),
+    PurchasePage(),
     MyTicketsPage(),
+    MapScreen(), // Add MapScreen here
     ProfilePage(),
   ];
 
@@ -102,13 +102,15 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
+        selectedItemColor: Colors.blue,  // Set the color for the selected icon
+        unselectedItemColor: Colors.blue, // Set the color for the unselected icons
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.flight), label: 'Booking'),
           BottomNavigationBarItem(icon: Icon(Icons.confirmation_number), label: 'Tickets'),
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'), // Add a new tab for the map
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
   }
 }
-

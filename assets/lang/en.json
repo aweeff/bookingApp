@@ -28,5 +28,6 @@
   "name": "Name",
   "email": "Email",
   "phone": "Phone",
-  "address": "Address"
+  "address": "Address",
+  "map": "Map"
 }
