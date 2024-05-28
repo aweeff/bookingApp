@@ -21,17 +21,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  late List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize pages here to ensure widget.user is passed correctly
+    _pages = [
+      PurchasePage(user: widget.user),
+      MyTicketsPage(), // Assuming MyTicketsPage doesn't need user data
+      MapScreen(), // Assuming MapScreen doesn't need user data
+      ProfilePage(user: widget.user), // Assuming ProfilePage doesn't need user data
+    ];
+  }
+
   void _changeTheme(ThemeData theme) {
     Provider.of<ThemeProvider>(context, listen: false).setTheme(theme);
   }
-
-  int _currentIndex = 0;
-  final List<Widget> _pages = [
-    PurchasePage(user: null,),
-    MyTicketsPage(),
-    MapScreen(), // Add MapScreen here
-    ProfilePage(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -102,12 +109,12 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
-        selectedItemColor: Colors.blue,  // Set the color for the selected icon
-        unselectedItemColor: Colors.blue, // Set the color for the unselected icons
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.flight), label: 'Booking'),
           BottomNavigationBarItem(icon: Icon(Icons.confirmation_number), label: 'Tickets'),
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'), // Add a new tab for the map
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),

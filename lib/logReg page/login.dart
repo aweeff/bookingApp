@@ -92,9 +92,9 @@ class _LoginFormState extends State<LoginForm> {
       // Navigate to HomePage
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(user:userdata)),
-      );
-      print(userdata);
+        MaterialPageRoute(builder: (context) => HomePage(user:jsonDecode(userdata)),
+      ));
+
     } else {
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(

@@ -4,7 +4,7 @@ import 'package:project1/localizations/l10n.dart';
 class PurchasePage extends StatefulWidget {
   final dynamic user;
 
-  PurchasePage({Key? key, required this.user}) : super(key: key);
+  const PurchasePage({Key? key, this.user}) : super(key: key);
   @override
   _PurchasePageState createState() => _PurchasePageState();
 }
