@@ -27,8 +27,13 @@ class AppLocalizations {
   }
 
   String translate(String key) {
-    return _localizedStrings![key]!;
+    return _localizedStrings![key] ?? '** $key not found';
   }
+
+  String get booking => translate('booking');
+  String get tickets => translate('tickets');
+  String get map => translate('map');
+  String get profile => translate('profile');
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

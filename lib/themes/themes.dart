@@ -8,6 +8,10 @@ final ThemeData lightTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     color: Colors.blue,
   ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    selectedItemColor: Colors.blue,
+    unselectedItemColor: Colors.grey,
+  ),
   buttonTheme: const ButtonThemeData(
     buttonColor: Colors.blue,
     textTheme: ButtonTextTheme.primary,
@@ -25,6 +29,10 @@ final ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   appBarTheme: AppBarTheme(
     color: Colors.grey[850],
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    selectedItemColor: Colors.blueGrey,
+    unselectedItemColor: Colors.grey,
   ),
   buttonTheme: const ButtonThemeData(
     buttonColor: Colors.blueGrey,
@@ -44,12 +52,16 @@ final ThemeData customColorfulTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     color: Colors.deepPurple,
   ),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedItemColor: Colors.amber,
+    unselectedItemColor: Colors.deepPurple[200],
+  ),
   buttonTheme: const ButtonThemeData(
     buttonColor: Colors.amber,
     textTheme: ButtonTextTheme.primary,
   ),
   textTheme: TextTheme(
-    displayLarge: TextStyle(color: Colors.deepPurple),
+    displayLarge: const TextStyle(color: Colors.deepPurple),
     bodyLarge: TextStyle(color: Colors.deepPurple[900]),
   ),
 );

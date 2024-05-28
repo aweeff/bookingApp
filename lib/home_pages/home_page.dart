@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../localizations/l10n.dart';
 import '../main.dart';
 import 'my_tickets_page.dart';
 import 'my_favorites_page.dart';
@@ -35,6 +36,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var localizations =   AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('JetJoy'),
@@ -102,13 +104,25 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
-        selectedItemColor: Colors.blue,  // Set the color for the selected icon
-        unselectedItemColor: Colors.blue, // Set the color for the unselected icons
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.flight), label: 'Booking'),
-          BottomNavigationBarItem(icon: Icon(Icons.confirmation_number), label: 'Tickets'),
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'), // Add a new tab for the map
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        selectedItemColor: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+        unselectedItemColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.flight),
+            label: localizations.booking,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.confirmation_number),
+            label: localizations.tickets,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            label: localizations.map,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: localizations.profile,
+          ),
         ],
       ),
     );

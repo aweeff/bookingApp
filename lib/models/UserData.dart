@@ -1,7 +1,7 @@
 class UserData {
 
 
-    final String name;
+  final String name;
   final String email;
   final String phone;
   final String address;
