@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Login",
+                     "Login",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 36,
