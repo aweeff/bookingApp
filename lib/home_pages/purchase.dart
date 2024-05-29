@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Ensure this package is in your pubspec.yaml
 import 'package:project1/localizations/l10n.dart';
-
+import 'package:http/http.dart' as http;
 
 class City {
   final String code;
@@ -25,6 +27,7 @@ class PurchasePage extends StatefulWidget {
 }
 
 class _PurchasePageState extends State<PurchasePage> {
+
   String? departure;
   String? destination;
   DateTime? departureDate;
@@ -35,7 +38,7 @@ class _PurchasePageState extends State<PurchasePage> {
   List<City> cities = [
     City("SCO", "Aktau"),
     City("AKH", "Aktobe"),
-    City("LAND", "Almaty"),
+    City("ALA", "Almaty"),
     City("NQZ", "Astana"),
     City("GUW", "Atyrau"),
     City("BXY", "Baikonur"),
@@ -57,10 +60,20 @@ class _PurchasePageState extends State<PurchasePage> {
   final List<String> classOptions = ['Economy', 'Business', 'First'];
   final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
 
+  TextEditingController departureDateController = TextEditingController();
+  TextEditingController returnDateController = TextEditingController();
+
+  @override
+  void dispose() {
+    departureDateController.dispose();
+    returnDateController.dispose();
+    super.dispose();
+  }
+
   Future<void> _selectDate(BuildContext context, bool isDeparture) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: isDeparture ? (departureDate ?? DateTime.now()) : (returnDate ?? DateTime.now()),
+      initialDate: (isDeparture ? departureDate : returnDate) ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
@@ -68,12 +81,51 @@ class _PurchasePageState extends State<PurchasePage> {
       setState(() {
         if (isDeparture) {
           departureDate = picked;
+          departureDateController.text = DateFormat('yyyy-MM-dd').format(picked);
         } else {
           returnDate = picked;
+          returnDateController.text = DateFormat('yyyy-MM-dd').format(picked);
         }
       });
     }
   }
+
+  Future<void> submitTicketDetails() async {
+    if (widget.user['email'] == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User email is not available')),
+      );
+      return;
+    }
+    String email = widget.user['email'];
+    var response = await http.post(
+      Uri.parse('http://192.168.1.28:3000/api/tickets'), // Change to your actual endpoint
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'email': email,
+        'departure': departure,
+        'destination': destination,
+        'departureDate': departureDate?.toIso8601String(),
+        'returnDate': returnDate?.toIso8601String(),
+        'travelClass': travelClass,
+        'isRoundTrip': isRoundTrip,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Ticket details submitted successfully')),
+      );
+      print(response.body);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to submit ticket details: ${response.body}')),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +153,6 @@ class _PurchasePageState extends State<PurchasePage> {
                 hintText: localizations.translate('select_departure'),
               ),
             ),
-
             const SizedBox(height: 10),
             DropdownButtonFormField<String>(
               value: destination,
@@ -120,18 +171,19 @@ class _PurchasePageState extends State<PurchasePage> {
               ),
             ),
             const SizedBox(height: 10),
-            GestureDetector(
-              onTap: () => _selectDate(context, true),
-              child: AbsorbPointer(
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: localizations.translate('departure_date'),
-                    hintText: localizations.translate('select_departure_date'),
-                    suffixIcon: Icon(Icons.calendar_today),
-                  ),
-                  controller: TextEditingController(text: departureDate == null ? '' : dateFormat.format(departureDate!)),
-                ),
+
+
+
+
+            TextFormField(
+              readOnly: true,
+              decoration: InputDecoration(
+                labelText: localizations.translate('departure_date'),
+                hintText: localizations.translate('select_departure_date'),
+                suffixIcon: Icon(Icons.calendar_today),
               ),
+              controller: departureDateController,
+              onTap: () => _selectDate(context, true),
             ),
             const SizedBox(height: 10),
             SwitchListTile(
@@ -141,25 +193,26 @@ class _PurchasePageState extends State<PurchasePage> {
                 setState(() {
                   isRoundTrip = value;
                   if (!isRoundTrip) {
-                    returnDate = null; // Clear return date when toggling off round trip
+                    returnDate = null;
+                    returnDateController.clear();
                   }
                 });
               },
             ),
             if (isRoundTrip)
-              GestureDetector(
-                onTap: () => _selectDate(context, false),
-                child: AbsorbPointer(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: localizations.translate('return_date'),
-                      hintText: localizations.translate('select_return_date'),
-                      suffixIcon: Icon(Icons.calendar_today),
-                    ),
-                    controller: TextEditingController(text: returnDate == null ? '' : dateFormat.format(returnDate!)),
-                  ),
+              TextFormField(
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: localizations.translate('return_date'),
+                  hintText: localizations.translate('select_return_date'),
+                  suffixIcon: Icon(Icons.calendar_today),
                 ),
+                controller: returnDateController,
+                onTap: () => _selectDate(context, false),
               ),
+
+
+
             const SizedBox(height: 20),
             DropdownButtonFormField<String>(
               value: travelClass,
@@ -173,6 +226,23 @@ class _PurchasePageState extends State<PurchasePage> {
               decoration: InputDecoration(
                 labelText: localizations.translate('class'),
                 hintText: localizations.translate('select_class'),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                submitTicketDetails();
+              },
+              child: const Text(
+                'Purchase',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
           ],
