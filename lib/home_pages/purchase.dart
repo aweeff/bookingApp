@@ -98,20 +98,25 @@ class _PurchasePageState extends State<PurchasePage> {
       return;
     }
     String email = widget.user['email'];
+    var payload = <String, dynamic>{
+      'email': email,
+      'departure': departure,
+      'destination': destination,
+      'departureDate': departureDate?.toIso8601String(),
+      'travelClass': travelClass,
+      'isRoundTrip': isRoundTrip,
+    };
+
+    if (isRoundTrip) {
+      payload['returnDate'] = returnDate?.toIso8601String();
+    }
+
     var response = await http.post(
       Uri.parse('http://192.168.1.28:3000/api/tickets'), // Change to your actual endpoint
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-        'email': email,
-        'departure': departure,
-        'destination': destination,
-        'departureDate': departureDate?.toIso8601String(),
-        'returnDate': returnDate?.toIso8601String(),
-        'travelClass': travelClass,
-        'isRoundTrip': isRoundTrip,
-      }),
+      body: jsonEncode(payload),
     );
 
     if (response.statusCode == 200) {
