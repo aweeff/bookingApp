@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     // Initialize pages here to ensure widget.user is passed correctly
     _pages = [
       PurchasePage(user: widget.user),
-      MyTicketsPage(), // Assuming MyTicketsPage doesn't need user data
+      MyTicketsPage(user: widget.user), // Assuming MyTicketsPage doesn't need user data
       MapScreen(), // Assuming MapScreen doesn't need user data
       ProfilePage(user: widget.user), // Assuming ProfilePage doesn't need user data
     ];

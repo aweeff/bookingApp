@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project1/logReg%20page/registration.dart';
 import 'package:project1/home_pages/home_page.dart';
-import 'package:project1/models/UserData.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);

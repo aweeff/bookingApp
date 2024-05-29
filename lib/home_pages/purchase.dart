@@ -8,13 +8,20 @@ import 'package:http/http.dart' as http;
 class City {
   final String code;
   final String name;
+  final double latitude;
+  final double longitude;
 
-  City(this.code, this.name);
+  City(this.code, this.name, this.latitude, this.longitude);
 
   // Helper method to fetch a localized name
   String localizedName(BuildContext context) {
     var localizations = AppLocalizations.of(context);
     return localizations.translate(name);
+  }
+
+  String codeToLocalizedName(BuildContext context) {
+    var localizations = AppLocalizations.of(context);
+    return localizations.translate(code);
   }
 }
 class PurchasePage extends StatefulWidget {
@@ -36,26 +43,26 @@ class _PurchasePageState extends State<PurchasePage> {
   bool isRoundTrip = true;
 
   List<City> cities = [
-    City("SCO", "Aktau"),
-    City("AKH", "Aktobe"),
-    City("ALA", "Almaty"),
-    City("NQZ", "Astana"),
-    City("GUW", "Atyrau"),
-    City("BXY", "Baikonur"),
-    City("BHX", "Balkhash"),
-    City("DZN", "Jezkazgan"),
-    City("KGF", "Karaganda"),
-    City("TOUCH", "Kokshetau"),
-    City("KSN", "Kostanay"),
-    City("KZO", "Kyzylorda"),
-    City("PWQ", "Pavlodar"),
-    City("PPK", "Petropavlovsk"),
-    City("PLX", "Semey"),
-    City("NO", "Taldykorgan"),
-    City("DMB", "Taraz"),
-    City("WATER", "Uralsk"),
-    City("FAQ", "Ust-Kamenogorsk"),
-    City("CIT", "Shymkent")
+    City("SCO", "Aktau", 43.6614, 51.1975),
+    City("AKH", "Aktobe", 50.2839, 57.166),
+    City("ALA", "Almaty", 43.222, 76.8512),
+    City("NQZ", "Astana", 51.1694, 71.4491),
+    City("GUW", "Atyrau", 47.0945, 51.9236),
+    City("BXY", "Baikonur", 45.9646, 63.3052),
+    City("BHX", "Balkhash", 46.8481, 74.9951),
+    City("DZN", "Jezkazgan", 47.786, 67.7081),
+    City("KGF", "Karaganda", 49.8047, 73.1094),
+    City("TOUCH", "Kokshetau", 53.2833, 69.3833),
+    City("KSN", "Kostanay", 53.2194, 63.6319),
+    City("KZO", "Kyzylorda", 44.8488, 65.4823),
+    City("PWQ", "Pavlodar", 52.2833, 76.9667),
+    City("PPK", "Petropavlovsk", 54.8833, 69.1667),
+    City("PLX", "Semey", 50.4114, 80.242),
+    City("NO", "Taldykorgan", 45.0156, 78.3739),
+    City("DMB", "Taraz", 42.9, 71.3667),
+    City("WATER", "Uralsk", 51.2333, 51.3667),
+    City("FAQ", "Ust-Kamenogorsk", 49.9715, 82.605),
+    City("CIT", "Shymkent", 42.3, 69.6),
   ];
   final List<String> classOptions = ['Economy', 'Business', 'First'];
   final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
