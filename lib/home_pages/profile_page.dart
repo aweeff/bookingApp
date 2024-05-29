@@ -32,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> fetchUserProfile() async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.201.4.144:3000/api/fetchProfile?email=${user['email']}'),
+        Uri.parse('http://192.168.1.28:3000/api/fetchProfile?email=${user['email']}'),
       );
       if (response.statusCode == 200) {
         setState(() {
@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _updateUserProfile() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.202.8.249:3000/api/update'),
+        Uri.parse('http://192.168.1.28:3000/api/update'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'mainmail': user["email"],

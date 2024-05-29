@@ -30,7 +30,29 @@
   "email": "Эл. почта",
   "phone": "Телефон",
   "address": "Адрес",
-
-
-  "map": "Карта"
+  "round_trip": "Туда и обратно",
+  "map": "Карта",
+  "Aktau": "Актау",
+  "Aktobe": "Актобе",
+  "Almaty": "Алматы",
+  "Astana": "Астана",
+  "Atyrau": "Атырау",
+  "Baikonur": "Байконур",
+  "Balkhash": "Балхаш",
+  "Jezkazgan": "Жезказган",
+  "Karaganda": "Караганда",
+  "Kokshetau": "Кокшетау",
+  "Kostanay": "Костанай",
+  "Kyzylorda": "Кызылорда",
+  "Pavlodar": "Павлодар",
+  "Petropavlovsk": "Петропавловск",
+  "Semey": "Семей",
+  "Taldykorgan": "Талдыкорган",
+  "Taraz": "Тараз",
+  "Uralsk": "Уральск",
+  "Ust-Kamenogorsk": "Усть-Каменогорск",
+  "Shymkent": "Шымкент",
+  "Business": "Бизнес",
+  "Economy": "Эконом",
+  "First": "Первый"
 }
